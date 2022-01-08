@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>     <!-- Setting to WinExe prevents the console window from showing. -->
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+   <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+
+	  <Platforms>x86;x64</Platforms>     <!-- This is required for .NET to know which platforms to target. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="IDepdendencyCheck.cs" />
+    <Compile Remove="WebView2Install.cs" />
+    <Compile Remove="WindowsAppSDKInstall.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1054.31" />
+  </ItemGroup>
+
+</Project>
