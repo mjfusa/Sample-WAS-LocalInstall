@@ -15,7 +15,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Framework" Version="17.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="6.0.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1054.31" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Dependencies\x64\Microsoft.VCLibs.x64.14.00.appx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Dependencies\x64\Microsoft.VCLibs.x64.14.00.Desktop.appx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Dependencies\x64\Microsoft.WindowsAppRuntime.1.0.msix">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Dependencies\x86\Microsoft.VCLibs.x86.14.00.appx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Dependencies\x86\Microsoft.VCLibs.x86.14.00.Desktop.appx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Dependencies\x86\Microsoft.WindowsAppRuntime.1.0.msix">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -64,22 +65,22 @@ namespace LauncherDepdendencyCheck
                         if (deploymentOperation.Status == AsyncStatus.Error)
                         {
                             DeploymentResult deploymentResult = deploymentOperation.GetResults();
-                            Debug.WriteLine("Error code: {0}\n", deploymentOperation.ErrorCode);
-                            Debug.WriteLine("Error text: {0}\n", deploymentResult.ErrorText);
+                            AppLogger.Logger.LogCritical("Error code: {0}\n", deploymentOperation.ErrorCode);
+                            AppLogger.Logger.LogCritical("Error text: {0}\n", deploymentResult.ErrorText);
                             returnValue = false;
                         }
                         else if (deploymentOperation.Status == AsyncStatus.Canceled)
                         {
-                            Debug.WriteLine("Installation canceled\n");
+                            AppLogger.Logger.LogInformation("Installation canceled\n");
                         }
                         else if (deploymentOperation.Status == AsyncStatus.Completed)
                         {
-                            Debug.WriteLine("Installation succeeded\n");
+                            AppLogger.Logger.LogInformation("Installation succeeded\n");
                         }
                         else
                         {
                             returnValue = false;
-                            Debug.WriteLine("Installation status unknown\n");
+                            AppLogger.Logger.LogCritical("Installation status unknown\n");
                         }
                     }
                     cnt++;
