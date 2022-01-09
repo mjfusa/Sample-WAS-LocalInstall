@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -39,8 +40,11 @@ namespace LauncherDepdendencyCheck
             // Task: Get install folder for app. This is necessary since default path for packaged apps is C:\Windows\System32
             try
             {
-                var installFolder = Package.Current.EffectivePath;
-            } catch (Exception ex)
+                var installFolder = Package.Current.EffectivePath; // NOTE: Packaged Apps Only
+                Process currentProcess = Process.GetCurrentProcess();
+                installFolder += "\\" + currentProcess.ProcessName;
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -104,6 +108,9 @@ namespace LauncherDepdendencyCheck
             {
                 // get MSIX / APPX files to be checked and installed.
                 var installFolder = Package.Current.EffectivePath; // NOTE: Packaged Apps Only
+                Process currentProcess = Process.GetCurrentProcess();
+                installFolder += "\\" + currentProcess.ProcessName;
+
                 // Task: Get list of MSIX dependency packages explictly included in app MSIX package. Return list of x64 or x86 MSIX dependency MSIXs
                 List<string> files = Directory.EnumerateFiles(installFolder + "//Dependencies", "*.???X", SearchOption.AllDirectories).ToList();
                 // Determine bitness of running process

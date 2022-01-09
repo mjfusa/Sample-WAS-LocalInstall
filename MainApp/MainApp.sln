@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "MainApp (Package)", "MainApp\MainApp (Package)\MainApp (Package).wapproj", "{9DC87051-AC14-4323-8034-C9555D7F0B6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp", "MainApp\MainApp\MainApp.csproj", "{F5C91F7F-2300-4C88-86D1-22D3A4DF3BBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainApp", "MainApp\MainApp\MainApp.csproj", "{F5C91F7F-2300-4C88-86D1-22D3A4DF3BBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LauncherDepdendencyCheck", "..\LauncherWASCheck\LauncherDepdendencyCheck.csproj", "{F9007D8F-0CF7-4E3A-AD96-D1DAFFE187A8}"
 EndProject
