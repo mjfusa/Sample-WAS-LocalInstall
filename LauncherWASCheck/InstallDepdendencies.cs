@@ -2,20 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
-using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Windows.Foundation;
 using Windows.Management.Deployment;
-using Windows.UI.Composition;
 
 namespace LauncherDepdendencyCheck
 {
@@ -41,7 +36,14 @@ namespace LauncherDepdendencyCheck
         }
         public async Task<bool> Install()
         {
-            var installFolder = Package.Current.EffectivePath;
+            // Task: Get install folder for app. This is necessary since default path for packaged apps is C:\Windows\System32
+            try
+            {
+                var installFolder = Package.Current.EffectivePath;
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
             int cnt = 0;
             bool returnValue = true;
             try
@@ -50,7 +52,7 @@ namespace LauncherDepdendencyCheck
                 {
                     if (!pi.Value.Installed)
                     {
-                        // TODO Display install progress
+                        // Task: Install depdedency packages in Dependecies folder in MSIX using PackageManager class
                         var deploymentOperation = PackageManager.AddPackageAsync(new Uri("file://" + FilesToInstall[cnt]), null, DeploymentOptions.None);
                         // This event is signaled when the operation completes
                         ManualResetEvent opCompletedEvent = new ManualResetEvent(false);
@@ -102,6 +104,7 @@ namespace LauncherDepdendencyCheck
             {
                 // get MSIX / APPX files to be checked and installed.
                 var installFolder = Package.Current.EffectivePath; // NOTE: Packaged Apps Only
+                // Task: Get list of MSIX dependency packages explictly included in app MSIX package. Return list of x64 or x86 MSIX dependency MSIXs
                 List<string> files = Directory.EnumerateFiles(installFolder + "//Dependencies", "*.???X", SearchOption.AllDirectories).ToList();
                 // Determine bitness of running process
                 string result = System.Environment.Is64BitProcess switch
@@ -124,7 +127,7 @@ namespace LauncherDepdendencyCheck
 
         private static bool GetPackageInfo(List<string> msixfiles)
         {
-            // Get package names and versions of MSIX depencency packages.
+            // Task: Parse Appxmanifest.xml in MSIX depencency package. Extract package names and versions.
             try
             {
                 foreach (string file in msixfiles)
@@ -156,6 +159,7 @@ namespace LauncherDepdendencyCheck
         }
         private bool IsInstalled()
         {
+            // Task: Determine if depdendency is already installed by comparing package family name and version
             // Compare PackageFamily name in Manifest what is installed on machine
             foreach (var pi in InstallDepdendencies.PackageInfo)
             {
@@ -180,6 +184,7 @@ namespace LauncherDepdendencyCheck
 
         private bool IsOutOfDate(PackageVersion currentVersion, string versionToInstall)
         {
+            // Task: Compare version numbers, comparing each number segment. Return if currentVersion is < versionToInstall
             var curVersion = $"{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build}.{currentVersion.Revision}";
             int[] verToInstall = versionToInstall.Split('.').Select(int.Parse).ToArray();
             int[] verCurVersion = curVersion.Split('.').Select(int.Parse).ToArray();

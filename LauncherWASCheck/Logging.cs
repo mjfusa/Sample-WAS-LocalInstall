@@ -1,22 +1,12 @@
-﻿using Microsoft.Extensions.Hosting;
-using System;
-using Microsoft.Build.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using System.Threading;
+﻿using LauncherWebViewCheck;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging.EventLog;
-using System.Diagnostics;
-using LauncherWebViewCheck;
+using Microsoft.Extensions.Logging;
 
 namespace LauncherDepdendencyCheck
 {
     public static class AppLogger
     {
+        // Task: Provide Debug and Windows Event logging. In Event Viewer: Windows logs | Application. Source == .NET Runtime
         public static ILogger<Program> Logger { get;  set; }
 
         public static bool Init()

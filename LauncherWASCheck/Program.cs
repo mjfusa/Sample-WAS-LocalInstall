@@ -1,15 +1,8 @@
 ﻿using LauncherDepdendencyCheck;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Net.WebSockets;
-using System.Runtime.InteropServices;
-using Windows.System;
-using Windows.UI.Core;
-using Windows.UI.Popups;
-using WinRT;
 
 namespace LauncherWebViewCheck
 {
@@ -55,6 +48,7 @@ namespace LauncherWebViewCheck
 
             try
             {
+                // Task: Start process in container using protocol. See package manifest for protocol definition
                 var psResult = Process.Start(new ProcessStartInfo("wasmainapp:") { UseShellExecute = true });
                 if (psResult == null)
                 {
