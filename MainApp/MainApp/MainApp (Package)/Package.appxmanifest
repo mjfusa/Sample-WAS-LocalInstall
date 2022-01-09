@@ -9,7 +9,7 @@
   <Identity
     Name="0e53b77f-604a-4455-87be-6a73377fdeb6"
     Publisher="CN=mikefra"
-    Version="1.0.3.0" />
+    Version="1.0.6.0" />
 
   <Properties>
     <DisplayName>MainApp (Package)</DisplayName>

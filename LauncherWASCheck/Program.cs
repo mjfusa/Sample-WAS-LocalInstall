@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Runtime.InteropServices;
@@ -45,13 +46,28 @@ namespace LauncherWebViewCheck
             {
                 var id = new InstallDepdendencies();
                 id.GetInfo();
-                id.Install();
+                id.Install().Wait();
             } catch (Exception ex)
             {
                 AppLogger.Logger.LogCritical(ex.Message);
+                return;
             }
 
-            Process.Start(new ProcessStartInfo("wasmainapp:") { UseShellExecute = true });
+            try
+            {
+                var psResult = Process.Start(new ProcessStartInfo("wasmainapp:") { UseShellExecute = true });
+                if (psResult == null)
+                {
+                    AppLogger.Logger.LogCritical($"Problem with starting {psResult.ProcessName}");
+                }
+                else
+                {
+                    AppLogger.Logger.LogInformation($"Process {psResult.ProcessName} successfully started.");
+                }
+            } catch (Win32Exception ex)
+            {
+                AppLogger.Logger.LogCritical(ex.Message);
+            }
 
         }
 
